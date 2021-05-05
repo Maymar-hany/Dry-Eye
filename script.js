@@ -180,6 +180,7 @@ var item2='';
 var item3 =''
 var comp ='';
 var show ='';
+var productResult="";
 var compoundsdiv = document.getElementById('compounds');
 var products = document.getElementById('products');
 var medicine = document.getElementById("medicine");
@@ -367,8 +368,7 @@ interact('.item')
         item2 +="+" +event.relatedTarget.id
       }
       
-      console.log(item2);
-      console.log(item.id);
+      
       item.classList.remove('cannot-drop')
       item.classList.add('can-drop')
       item.classList.add('drop-target')
@@ -387,7 +387,7 @@ interact('.item')
        compined[`${three}+${one}+${two}`] ||
        compined[`${one}+${two}`] || compined[`${two}+${one}`]
        
-
+      
       if(medicTarget!==undefined ){
 
         medicines.forEach(element => {
@@ -396,18 +396,25 @@ interact('.item')
             var product = document.getElementById("product");
             var output= document.getElementById("output");
             var audio = new Audio('mixkit-achievement-bell-600.wav');
-            if(medicTarget==='images/iridium-gel.png'){
-              output.style.height = '150px';
-              output.style.width = '200px';
+            productResult = document.getElementById(show.id+'1')
+            console.log(productResult.id);
+      //var compare = document.querySelector("#"+productResult.id).querySelector('#medicImg').getAttribute('src')
+      
+            if(productResult.className.includes('is-hidden')){
+              if(medicTarget==='images/iridium-gel.png'){
+                output.style.height = '150px';
+                output.style.width = '200px';
+                
+                audio.play();
+                output.src=medicTarget
+              }else{
+                audio.play();
+                output.src=medicTarget
+              }
               
-              audio.play();
-              output.src=medicTarget
-            }else{
-              audio.play();
-              output.src=medicTarget
+              product.classList.add('is-active') 
             }
-            
-            product.classList.add('is-active')
+         
         
           }
         })
@@ -471,6 +478,7 @@ interact('.item')
        }
        var targetid= event.target.id
        
+      
        
        
       var attr=document.getElementById(targetid).getAttribute('data-medic')
@@ -479,10 +487,12 @@ interact('.item')
       if (attr == currentmedic ){
          // i.style.display='flex' 
          audio.play();
-         result.classList.add('is-active')
-          
-         // item.classList.remove('medicine-item','dragging')
          
+         //console.log(compare);
+         result.classList.add('is-active')
+        
+         // item.classList.remove('medicine-item','dragging')
+        
           }
           else{
             
@@ -496,10 +506,7 @@ interact('.item')
       item.classList.remove('can-drop')
       item.classList.add('cannot-drop')
       var d= event.target.id
-      if(toast.innerText==='still Suffering!'){
-        
-        setTimeout(function(){ toast.className = toast.className.replace("show", "");}, 50);
-        }
+      
      /*   var i = document.querySelector("#"+d).querySelector("#check")
       i.style.display = 'none' */
       
@@ -507,10 +514,10 @@ interact('.item')
     ondrop:function(event) {
       const item = event.relatedTarget
       
-      if (!item.className.includes('medicine-item')){
-        setTimeout(function(){ toast.className = toast.className.replace("show", "");}, 3000); 
+      
+        
       document.getElementById("score").innerHTML = ++score;
-    }
+    
     if (score===medicines.length){
       
          openfinalscore();
@@ -545,7 +552,7 @@ interact('.item')
   function closeresult(){
     show.classList.add('is-hidden')
     result.classList.remove('is-active')
-    var productResult = document.getElementById(show.id+'1')
+     
       productResult.classList.remove('is-hidden')
       
     
